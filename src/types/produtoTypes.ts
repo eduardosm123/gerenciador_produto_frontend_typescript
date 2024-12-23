@@ -3,20 +3,26 @@ export type Produto = {
     name: string,
     price: number,
     description: string,
-    category: CategoriaProduto,
+    categoryId: string,
     createdAt: string,
     updatedAt: string,
 }
 
-export type CategoriaProduto = {
+export type ProdutoLista = {
     _id: string,
     name: string,
+    price: number,
+    description: string,
+    categoryId: {
+        _id: string,
+        name: string
+    },
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
 }
 
-export type ProdutoLista = {
-    lista: Produto[],
+export type ListaDeProdutos = {
+    lista: ProdutoLista[],
     pages: number,
     totalpages: number
 }
@@ -24,10 +30,8 @@ export type ProdutoLista = {
 export type ProdutoFormCreate = {
     name: string,
     price: number,
-    description: number,
-    category: {
-        name: string
-    }
+    description: string,
+    categoryId: string
 }
 
 export type ProdutoForm = {

@@ -11,8 +11,10 @@ import ButtonDelete from '../components/ButtonDelete';
  
 import { RootState } from '../redux/store';
 
-import { definirLista, definirPage, definirTotalPage } from '../redux/reducer/categoriaSlice';
+import { definirLista, definirPage, definirTotalPage, limparListaCategoria } from '../redux/reducer/categoriaSlice';
 import { getCategoriaPaginada, deleteCategoria } from '../API/categoria';
+
+
 
 
 export default function ListCategoria() {
@@ -65,13 +67,16 @@ export default function ListCategoria() {
         }
     }
 
+    const limparPagina = () => {
+        dispatch(limparListaCategoria())
+    }
     return (
         <div className="d-flex flex-column justify-content-center align-items-center bg-light vh-100">
             <h1>Lista de Categorias</h1>
             <div className="w-75 rounded bg-white border shadow p-4">
                 <div className="d-flex justify-content-end mb-3">
                     <Link to="/categoria/create" className="btn btn-success">Adicionar categoria</Link>
-                    <Link to={"/"} className="btn btn-primary ms-3">Voltar</Link>
+                    <Link to={"/"} className="btn btn-primary ms-3" onClick={limparPagina}>Voltar</Link>
                 </div>
                 <table className="table table-striped">
                     <thead>
@@ -88,7 +93,7 @@ export default function ListCategoria() {
                                 <td>{registro.name}</td>
                                 <td>
                                     <ButtonRead id={registro._id} link={'/categoria/read'} />
-                                    <ButtonEdit id={registro._id} link="/categoria/update" read={false} />
+                                    <ButtonEdit id={registro._id} link="/categoria/update" />
                                     <ButtonDelete func={() => handleDelete(registro._id)} />
                                 </td>
                             </tr>

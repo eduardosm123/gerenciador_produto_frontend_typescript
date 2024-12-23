@@ -68,8 +68,8 @@ export default function ReadCategoria() {
                 <div className="mb-2">
                     <strong>Data de Atualização: {data.updatedAt}</strong>
                 </div>
-                <ButtonEdit id={id} link="/categoria/update" read={true} />
-                <button onClick={voltar} className="btn btn-primary ms-3">Voltar</button>
+                <ButtonEdit id={id} link="/categoria/update"  />
+                <button onClick={voltar} className="btn btn-sm btn-primary me-2">Voltar</button>
             </div>
         </div>
     ) : <div></div>;

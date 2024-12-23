@@ -44,20 +44,25 @@ export const categoriaSlice = createSlice({
         definirCategoriaFormUpdateAndReadName: (state, { payload }) => {
             state.categoriaForm.updateAndRead.name = payload
         },        
-        limparLista: (state) => {
-            state.categoriasList.lista = initialState.categoriasList.lista;
+        limparListaCategoria: (state) => {
+            state.categoriasList.lista = [];
+            state.categoriasList.pages = 1;
+            state.categoriasList.totalPages = 1;
         },
-        limparFormularioCreate: (state) => {
-            state.categoriaForm.create = initialState.categoriaForm.create;
+        limparFormularioCreate: (state) => { 
+            state.categoriaForm.create.name = ''
         },
-        limparFormularioUpdateAndRead: (state) => {
-            state.categoriaForm.updateAndRead = initialState.categoriaForm.updateAndRead;
+        limparFormularioUpdateAndRead: (state) => { 
+            state.categoriaForm.updateAndRead.__v = ''
+            state.categoriaForm.updateAndRead.name = ''
+            state.categoriaForm.updateAndRead.createdAt = ''
+            state.categoriaForm.updateAndRead.updatedAt = ''
         }
     }
 })
 
 export const { definirLista, 
-    limparLista, limparFormularioCreate, 
+    limparListaCategoria, limparFormularioCreate, 
     limparFormularioUpdateAndRead, definirTotalPage, 
     definirPage, definirCategoriaFormCreate, 
     definirCategoriaFormUpdateAndReadInicial, 
