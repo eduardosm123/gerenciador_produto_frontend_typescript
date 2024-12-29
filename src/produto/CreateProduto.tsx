@@ -90,7 +90,7 @@ export default function CreateProduto() {
                         className="form-control"
                         value={values.categoryId}
                         onChange={e => dispatch(definirProdutoFormCreate_categoryId(e.target.value))}>
-                        <option value={values.categoryId}>Escolha a categoria</option>
+                        <option value={""}>Escolha a categoria</option>
                         {categorias.map((categoria, index) => (
                             <option key={index} value={categoria._id}>{categoria.name}</option>
                         ))}
