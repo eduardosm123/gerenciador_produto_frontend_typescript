@@ -38,7 +38,8 @@ export default function CreateCategoria() {
                             name="name"
                             className="form-control"
                             placeholder="Digite o nome da categoria"
-                            onChange={e => dispatch(definirCategoriaFormCreate({ ...values, name: e.target.value }))} />
+                            value={values.name}
+                            onChange={e => dispatch(definirCategoriaFormCreate(e.target.value))} />
                     </div>
                     <ButtonAplicar msg="Cadastrar"/> 
                     <Link to={"/categoria"} className="btn btn-primary ms-3">Voltar</Link>

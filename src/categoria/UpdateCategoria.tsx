@@ -42,7 +42,7 @@ export default function UpdateCategoria() {
         }
 
         getCategoriaLocal();
-    }, []);
+    }, [dispatch]);
 
 
     const voltar = (event: React.MouseEvent<HTMLElement>) => {

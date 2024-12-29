@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Produto, ProdutoForm, ProdutoLista, ProdutoFormCreate, ListaDeProdutos } from "../../types/produtoTypes.ts";
+import {   ProdutoForm, ProdutoListaAndRead, ProdutoFormCreate, ListaDeProdutos } from "../../types/produtoTypes.ts";
 
 interface IProduto {
     listaDeProdutos: ListaDeProdutos,
@@ -9,10 +9,11 @@ interface IProduto {
 const initialState: IProduto = {
     produtoForm: {
         create: {} as ProdutoFormCreate,
-        updateAndRead: {} as Produto
+        update: {} as ProdutoListaAndRead,
+        read: {} as ProdutoListaAndRead
     },
     listaDeProdutos: {
-        lista: [] as ProdutoLista[],
+        lista: [] as ProdutoListaAndRead[],
         pages: 1,
         totalpages: 1
     }
@@ -43,34 +44,49 @@ export const produtoSlice = createSlice({
         },
         // atualizar e ler produtos
         definirUpdateAndRead_id: (state, { payload }) => {
-            state.produtoForm.updateAndRead._id = payload
+            state.produtoForm.update._id = payload
         },
         definirUpdateAndRead_name: (state, { payload }) => {
-            state.produtoForm.updateAndRead.name = payload
+            state.produtoForm.update.name = payload
         },
         definirUpdateAndRead_price: (state, { payload }) => {
-            state.produtoForm.updateAndRead.price = payload
+            state.produtoForm.update.price = payload
         },
         definirUpdateAndRead_description: (state, { payload }) => {
-            state.produtoForm.updateAndRead.description = payload
+            state.produtoForm.update.description = payload
         },
         definirUpdateAndRead_categoryId: (state, { payload }) => {
-            state.produtoForm.updateAndRead.categoryId = payload
+            state.produtoForm.update.categoryId._id = payload
         },
         definirUpdateAndRead_createdAt: (state, { payload }) => {
-            state.produtoForm.updateAndRead.createdAt = payload
+            state.produtoForm.update.createdAt = payload
         },
         definirUpdateAndRead_updatedAt: (state, { payload }) => {
-            state.produtoForm.updateAndRead.updatedAt = payload
+            state.produtoForm.update.updatedAt = payload
         },
-        limparUpdateAndRead: (state) => { 
-            state.produtoForm.updateAndRead._id = ''
-            state.produtoForm.updateAndRead.categoryId = ''
-            state.produtoForm.updateAndRead.createdAt = ''
-            state.produtoForm.updateAndRead.description = ''
-            state.produtoForm.updateAndRead.name = ''
-            state.produtoForm.updateAndRead.price = 0
-            state.produtoForm.updateAndRead.updatedAt = ''    
+        definirProdutoFormUpdateInicial: (state, { payload }) => {
+            state.produtoForm.update = payload
+        },
+        definirProdutoFormReadInicial: (state, { payload }) => {
+            state.produtoForm.read = payload
+        },
+        limparUpdate: (state) => { 
+            state.produtoForm.update._id = ''
+            state.produtoForm.update.updatedAt = ''
+            state.produtoForm.update.createdAt = ''
+            state.produtoForm.update.description = ''
+            state.produtoForm.update.name = ''
+            state.produtoForm.update.price = 0
+            state.produtoForm.update.updatedAt = '' 
+            state.produtoForm.update.categoryId._id = ''
+            state.produtoForm.update.categoryId.name = ''   
+        },
+        limparRead: (state) => { 
+           state.produtoForm.read.categoryId._id = ''
+           state.produtoForm.read.categoryId.name = ''
+           state.produtoForm.read.description = ''
+           state.produtoForm.read.price = 0
+           state.produtoForm.read.name = ''   
         },
         // lista de produtos
         definirListaDeProdutos_lista: (state, { payload }) => {
@@ -102,7 +118,10 @@ export const { limparListaProdutos, definirProdutoFormCreate_name,
     definirUpdateAndRead_categoryId,
     definirUpdateAndRead_createdAt,
     definirUpdateAndRead_updatedAt,
-    limparUpdateAndRead,
+    limparUpdate,
+    limparRead,
     definirListaDeProdutos_lista,
     definirListaDeProdutos_pages,
+    definirProdutoFormUpdateInicial,
+    definirProdutoFormReadInicial,
     definirListaDeProdutos_totalpages } = produtoSlice.actions

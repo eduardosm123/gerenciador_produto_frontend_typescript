@@ -4,7 +4,8 @@ import { Categoria, CategoriaForm, CategoriaList } from "../../types/categoriaTy
 
 interface ICategoria {
     categoriasList: CategoriaList,
-    categoriaForm: CategoriaForm
+    categoriaForm: CategoriaForm,
+    categoriaProduto: Categoria
 }
 
 const initialState: ICategoria = {
@@ -18,9 +19,12 @@ const initialState: ICategoria = {
             name: ''
         },
         updateAndRead: {} as Categoria
+    },
+    categoriaProduto: {} as Categoria
+    
     }
 
-}
+
 
 export const categoriaSlice = createSlice({
     name: 'categoria',
@@ -36,10 +40,13 @@ export const categoriaSlice = createSlice({
             state.categoriasList.pages = payload
         },
         definirCategoriaFormCreate: (state, { payload }) => {
-            state.categoriaForm.create = payload
+            state.categoriaForm.create.name = payload
         },
         definirCategoriaFormUpdateAndReadInicial: (state, { payload }) => {
             state.categoriaForm.updateAndRead = payload
+        },
+        definirCategoriaProduto: (state, { payload }) => {
+            state.categoriaProduto = payload
         },
         definirCategoriaFormUpdateAndReadName: (state, { payload }) => {
             state.categoriaForm.updateAndRead.name = payload
@@ -66,4 +73,5 @@ export const { definirLista,
     limparFormularioUpdateAndRead, definirTotalPage, 
     definirPage, definirCategoriaFormCreate, 
     definirCategoriaFormUpdateAndReadInicial, 
+    definirCategoriaProduto,
     definirCategoriaFormUpdateAndReadName } = categoriaSlice.actions

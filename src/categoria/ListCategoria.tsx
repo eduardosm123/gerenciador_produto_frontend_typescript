@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
 
- 
+
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import ButtonEdit from '../components/ButtonEdit';
-import ButtonRead from '../components/ButtonRead';
-import ButtonDelete from '../components/ButtonDelete';
- 
+import ButtonRead from '../components/ButtonRead'; 
+
 import { RootState } from '../redux/store';
 
 import { definirLista, definirPage, definirTotalPage, limparListaCategoria } from '../redux/reducer/categoriaSlice';
@@ -22,13 +21,14 @@ export default function ListCategoria() {
     const totalPages = useSelector((state: RootState) => state.categoria.categoriasList.totalPages)
     const page = useSelector((state: RootState) => state.categoria.categoriasList.pages)
 
-   
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         async function getCategoria() {
             try {
                 const resposta: any = await getCategoriaPaginada(page);
+
                 dispatch(definirLista(resposta.data.categories))
                 dispatch(definirTotalPage(resposta.data.totalPages))
             } catch (error) {
@@ -40,20 +40,24 @@ export default function ListCategoria() {
     }, [page]);
 
 
-    const handleDelete = (id: string) => {
-        const confirm = window.confirm("Você tem certeza que quer deletar?");
-        if (confirm) {
-            async function deleteCategoriaLocal() {
-                try {
-                    await deleteCategoria(id)
+    const handleDelete = async (event: React.MouseEvent, id: string) => {
+
+        event.preventDefault()
+        const confirmDelete = window.confirm("Você tem certeza que quer deletar?");
+        if (confirmDelete) {
+            try {
+                const response: any = await deleteCategoria(id)
+                if (response.status === 200) {
                     window.location.reload();
-                } catch (error) {
-                    console.log(error);
-                }
+                }  
+            } catch (error) {
+                console.log(error);
+                alert("Categoria associada a um produto")
             }
-            deleteCategoriaLocal()
         }
     }
+
+
 
     const handlePreviousPage = () => {
         if (page > 1) {
@@ -94,7 +98,9 @@ export default function ListCategoria() {
                                 <td>
                                     <ButtonRead id={registro._id} link={'/categoria/read'} />
                                     <ButtonEdit id={registro._id} link="/categoria/update" />
-                                    <ButtonDelete func={() => handleDelete(registro._id)} />
+
+                                    <button onClick={(event) => handleDelete(event, registro._id)} className="btn btn-sm btn-danger">Deletar</button>
+
                                 </td>
                             </tr>
                         )) : (

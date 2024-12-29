@@ -10,6 +10,9 @@ import UpdateCategoria from './categoria/UpdateCategoria.tsx'
 // CSS
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ListProdutos from './produto/ListProduto.tsx'
+import CreateProduto from './produto/CreateProduto.tsx'
+import ReadProduto from './produto/ReadProduto.tsx'
+import UpdateProdutos from './produto/UpdateProduto.tsx'
 
 function App() { 
 
@@ -22,6 +25,9 @@ function App() {
         <Route path="/categoria/read/:id" element={<ReadCategoria />}></Route>
         <Route path="/categoria/update/:id" element={<UpdateCategoria />}></Route>
         <Route path="/produtos" element={<ListProdutos />}></Route>
+        <Route path="/produtos/create" element={<CreateProduto />}></Route>
+        <Route path="/produtos/read/:id" element={<ReadProduto />}></Route>
+        <Route path="/produtos/update/:id" element={<UpdateProdutos />}></Route>
       </Routes>
     </BrowserRouter>
   )

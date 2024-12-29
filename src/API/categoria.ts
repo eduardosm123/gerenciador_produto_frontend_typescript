@@ -47,7 +47,8 @@ export const getCategoriaById = async (id: string) => {
 
 export const deleteCategoria = async (id: string) => {
     try {
-        await axios.delete(`${apiURL}/category/${id}`);
+        const resposta = await axios.delete(`${apiURL}/category/${id}`);
+        return resposta
     } catch (error) {
         console.log(error)
     }

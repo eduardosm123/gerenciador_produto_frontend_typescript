@@ -8,7 +8,7 @@ export type Produto = {
     updatedAt: string,
 }
 
-export type ProdutoLista = {
+export type ProdutoListaAndRead = {
     _id: string,
     name: string,
     price: number,
@@ -22,7 +22,7 @@ export type ProdutoLista = {
 }
 
 export type ListaDeProdutos = {
-    lista: ProdutoLista[],
+    lista: ProdutoListaAndRead[],
     pages: number,
     totalpages: number
 }
@@ -34,7 +34,10 @@ export type ProdutoFormCreate = {
     categoryId: string
 }
 
+
+
 export type ProdutoForm = {
     create: ProdutoFormCreate,
-    updateAndRead: Produto
+    update: ProdutoListaAndRead,
+    read: ProdutoListaAndRead
 }
