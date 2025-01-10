@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 
 type ButtonEditProps = {
     id: string,
-    link: string
+    link: string,
+    className?: string,
 }
 
-const ButtonEdit: React.FC<ButtonEditProps> = ({ id, link}) => {
+const ButtonEdit: React.FC<ButtonEditProps> = ({ id, link, className = "btn btn-sm btn-primary"}) => {
     return (
-       <Link to={`${link}/${id}`} className="btn btn-sm btn-primary me-2">Editar</Link>
+       <Link to={`${link}/${id}`} className={className}>Editar</Link>
     )
 };
 

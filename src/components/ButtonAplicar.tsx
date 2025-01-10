@@ -8,7 +8,7 @@ type ButtonAplicarProps = {
 
 const ButtonAplicar: React.FC<ButtonAplicarProps> = ({ msg = 'Aplicar'}) => {
     return (
-        <button  className="btn btn-success">{msg}</button>
+        <button  className="btn btn-success w-100 ">{msg}</button>
     )
 };
 

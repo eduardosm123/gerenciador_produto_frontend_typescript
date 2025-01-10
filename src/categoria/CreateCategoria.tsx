@@ -1,6 +1,6 @@
 import { FormEvent } from 'react';
 
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -30,7 +30,7 @@ export default function CreateCategoria() {
     return (
         <div className="d-flex w-100 vh-100 justify-content-center align-items-center bg-light">
             <div className="w-50 border bg-white shadow px-5 pt-3 pb-5 rounded">
-                <h1>Adicionar Categoria</h1>
+                <h1  >Adicionar Categoria</h1>
                 <form onSubmit={handleSubmit} >
                     <div className="mb-2 d-flex flex-column">
                         <label htmlFor="name">Nome da categoria:</label>
@@ -41,8 +41,13 @@ export default function CreateCategoria() {
                             value={values.name}
                             onChange={e => dispatch(definirCategoriaFormCreate(e.target.value))} />
                     </div>
-                    <ButtonAplicar msg="Cadastrar"/> 
-                    <Link to={"/categoria"} className="btn btn-primary ms-3">Voltar</Link>
+                    <div className='row'>
+                        <div className="col-md-5 col-lg-3 col-sm-5 m-1"> <ButtonAplicar msg="Cadastrar" /></div>
+                        <div className="col-md-5 col-lg-3 col-sm-5 m-1">
+                            <Link to={"/categoria"} className="btn btn-primary w-100 " >Voltar</Link>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>

@@ -1,43 +1,50 @@
-export type Produto = {
-    _id: string,
+ 
+
+export type ProductList = {
+    list: ProductToReceive[],
+    pages: number,
+    totalpages: number
+}
+
+
+
+export type ProductToSend = {
     name: string,
     price: number,
     description: string,
     categoryId: string,
-    createdAt: string,
-    updatedAt: string,
+    image: string,
+    imageFile: File
 }
 
-export type ProdutoListaAndRead = {
+export type ProductToReceive = {
     _id: string,
     name: string,
     price: number,
     description: string,
+    image: string,
     categoryId: {
         _id: string,
         name: string
     },
     createdAt: string,
     updatedAt: string,
+    __v: number
 }
 
-export type ListaDeProdutos = {
-    lista: ProdutoListaAndRead[],
-    pages: number,
-    totalpages: number
-}
 
-export type ProdutoFormCreate = {
+export type ProductToUpdate = {
+    _id: string,
     name: string,
     price: number,
     description: string,
-    categoryId: string
-}
-
-
-
-export type ProdutoForm = {
-    create: ProdutoFormCreate,
-    update: ProdutoListaAndRead,
-    read: ProdutoListaAndRead
+    image: string,
+    imageFile: File,
+    categoryId: {
+        _id: string,
+        name: string
+    },
+    createdAt: string,
+    updatedAt: string,
+    __v: number
 }

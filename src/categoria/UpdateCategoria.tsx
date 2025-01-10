@@ -1,5 +1,5 @@
 import React from "react"
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
  
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,8 @@ import { getCategoriaById, updateCategory } from "../API/categoria";
 import { RootState } from "../redux/store";
 import { Categoria } from "../types/categoriaTypes";
 import { FormEvent } from 'react';
+import ButtonAplicar from "../components/ButtonAplicar";
+
 export default function UpdateCategoria() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -82,9 +84,14 @@ export default function UpdateCategoria() {
                             placeholder="Digite o nome da categoria"
                             onChange={e => dispatch(definirCategoriaFormUpdateAndReadName(e.target.value))}
                             value={data.name} />
-                    </div> 
-                    <button  className="btn btn-success">Aplicar</button>
-                    <button onClick={voltar} className="btn btn-primary ms-3">Voltar</button>
+                    </div>  
+                    <div className='row'>
+                        <div className="col-md-5 col-lg-3 col-sm-5 m-1"><ButtonAplicar msg="Editar" /></div>
+                        <div className="col-md-5 col-lg-3 col-sm-5 m-1">
+                         
+                        <Link onClick={voltar} to={"/categoria"} className="btn btn-primary w-100 " >Voltar</Link>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

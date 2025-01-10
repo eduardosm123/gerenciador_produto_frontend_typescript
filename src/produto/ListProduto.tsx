@@ -9,16 +9,16 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { deleteProduto, getProdutoPaginado } from "../API/produto";
-import { definirListaDeProdutos_lista, definirListaDeProdutos_pages, definirListaDeProdutos_totalpages, limparListaProdutos } from "../redux/reducer/produtoSlice";
+import { setProductList, clearProductList } from "../redux/reducer/produtoSlice";
 import ButtonEdit from '../components/ButtonEdit';
-
+import { apiImage } from "../API/produto";
 
 
 
 export default function ListProdutos() {
-    const data = useSelector((state: RootState) => state.produto.listaDeProdutos.lista)
-    const totalPages = useSelector((state: RootState) => state.produto.listaDeProdutos.totalpages)
-    const page = useSelector((state: RootState) => state.produto.listaDeProdutos.pages)
+    const data = useSelector((state: RootState) => state.produto.productList.list)
+    const totalPages = useSelector((state: RootState) => state.produto.productList.totalpages)
+    const page = useSelector((state: RootState) => state.produto.productList.pages)
 
     const dispatch = useDispatch();
 
@@ -26,8 +26,8 @@ export default function ListProdutos() {
         async function getProductProdutosLocal() {
             try {
                 const res: any = await getProdutoPaginado(page)
-                dispatch(definirListaDeProdutos_lista(res.data.produtos))
-                dispatch(definirListaDeProdutos_totalpages(res.data.totalPages))
+                dispatch(setProductList({ list: res.data.produtos }))
+                dispatch(setProductList({ totalpages: res.data.totalPages }))
             } catch (error) {
                 console.log(error)
             }
@@ -39,7 +39,7 @@ export default function ListProdutos() {
 
     const handleDelete = (id: string) => {
         const confirm = window.confirm("Você tem certeza que quer deletar?")
-        if (confirm) { 
+        if (confirm) {
             async function deleteProdutoLocal() {
                 try {
                     await deleteProduto(id)
@@ -54,21 +54,22 @@ export default function ListProdutos() {
 
     const handlePreviousPage = () => {
         if (page > 1) {
-            dispatch(definirListaDeProdutos_pages(page - 1))
+
+            dispatch(setProductList({ pages: page - 1 }))
         }
     }
 
     const handleNextPage = () => {
         if (page < totalPages) {
-            dispatch(definirListaDeProdutos_pages(page + 1))
+            dispatch(setProductList({ pages: page + 1 }))
         }
     }
 
     const limparProduto = () => {
-        dispatch(limparListaProdutos())
+        dispatch(clearProductList())
     }
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center bg-light vh-100">
+        <div className="d-flex flex-column justify-content-center align-items-center bg-light  ">
             <h1>Lista de Produtos</h1>
             <div className="w-75 rounded bg-white border shadow p-4">
                 <div className="d-flex  justify-content-end">
@@ -79,39 +80,46 @@ export default function ListProdutos() {
                         <Link to={"/"} className="btn btn-primary ms-3" onClick={limparProduto}>Voltar</Link>
                     </div>
                 </div>
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Preço</th>
-                            <th>Descrição</th>
-                            <th>Categoria</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && data != null && data.length > 0 ? data.map((registro, key) => (
-                            <tr key={key}>
-                                <td>{registro._id}</td>
-                                <td>{registro.name}</td>
-                                <td>{registro.price}</td>
-                                <td>{registro.description}</td>
-                                {registro.categoryId ? <td>{registro.categoryId.name}</td> : <td>sem categoria</td>}
-                                <td>
-                                    <ButtonRead id={registro._id} link={'/produtos/read'} />
-                                    <ButtonEdit id={registro._id} link="/produtos/update" />
-                                    <ButtonDelete func={() => handleDelete(registro._id)} />
-                                </td>
-
+                <div className="table-responsive mt-1">
+                    <table className="table table-striped table-bordered">
+                        <thead className="table-dark">
+                            <tr >
+                                <th>ID</th>
+                                <th>Imagem</th>
+                                <th>Nome</th>
+                                <th>Preço</th>
+                                <th>Descrição</th>
+                                <th>Categoria</th>
+                                <th>Ação</th>
                             </tr>
-                        )) :
-                            <tr>
-                                <td>
-                                    <h1>Não tem dados</h1>
-                                </td>
-                            </tr>}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {data && data != null && data.length > 0 ? data.map((product, key) => (
+                                <tr key={key}>
+                                    <td>{product._id}</td>
+                                    <td className="w-25 w-sm-50 w-md-50 w-lg-75"> <img src={`${apiImage}/${product.image}`} alt="imagem do produto" className="img-thumbnail w-50" /></td>
+                                    <td>{product.name}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.description}</td>
+                                    {product.categoryId ? <td>{product.categoryId.name}</td> : <td>sem categoria</td>}
+                                    <td>
+                                        <div className="d-flex justify-content-between">
+                                            <ButtonRead id={product._id} link={'/produtos/read'} />
+                                            <ButtonEdit id={product._id} link="/produtos/update" />
+                                            <ButtonDelete func={() => handleDelete(product._id)} />
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            )) :
+                                <tr>
+                                    <td>
+                                        <h1>Não tem dados</h1>
+                                    </td>
+                                </tr>}
+                        </tbody>
+                    </table>
+                </div>
                 <div className="d-flex justify-content-between mt-3">
                     <button onClick={handlePreviousPage} className="btn btn-secondary" disabled={page === 1}>Anterior</button>
                     <span>Página {page} de {totalPages}</span>

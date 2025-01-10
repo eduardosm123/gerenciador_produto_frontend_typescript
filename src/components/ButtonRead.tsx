@@ -9,7 +9,7 @@ type ButtonReadProps = {
 
 const ButtonRead: React.FC<ButtonReadProps> = ({ id, link }) => {
     return (
-        <Link to={`${link}/${id}`} className="btn btn-sm btn-info me-2">Ler</Link>
+        <Link to={`${link}/${id}`} className="btn btn-sm btn-info ">Ler</Link>
     )
 };
 

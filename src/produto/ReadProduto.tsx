@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getProdutoById } from "../API/produto";
-import { definirProdutoFormReadInicial, limparRead } from "../redux/reducer/produtoSlice";
+import { setProductToReceive, clearProductToReceive } from "../redux/reducer/produtoSlice";
 import ButtonEdit from "../components/ButtonEdit";
+import { apiImage } from "../API/produto";
 
 export default function ReadProduto() {
 
-    const data = useSelector((state: RootState) => state.produto.produtoForm.read)
+    const data = useSelector((state: RootState) => state.produto.produtoForm.receive)
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const { id } = useParams();
@@ -26,7 +27,7 @@ export default function ReadProduto() {
                     const res = await getProdutoById(id);
 
                     if (res && typeof res === 'object' && 'data' in res) {
-                        dispatch(definirProdutoFormReadInicial(res.data))
+                        dispatch(setProductToReceive(res.data))
                     }
                 }
             } catch (error) {
@@ -39,35 +40,44 @@ export default function ReadProduto() {
 
     const voltar = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault()
-        dispatch(limparRead())
+        dispatch(clearProductToReceive())
         navigate("/produtos")
     }
     return id && typeof id === 'string' && data ? (<div className="d-flex w-100 vh-100 justify-content-center align-items-center bg-light">
         <div className="w-50 border bg-white shadow px-5 pt-3 pb-5 rounded">
             <h3>Detalhe do Produto</h3>
-            <div className="mb-2">
+            <div className="mb-2" style={{ wordWrap: 'break-word' }}>
                 <strong>ID: {data._id}</strong>
             </div>
-            <div className="mb-2">
+            <div className="mb-2" style={{ wordWrap: 'break-word' }}>
+                <img src={`${apiImage}/${data.image}`} alt="imagem do produto" className="img-fluid w-25 w-sm-25 w-md-50 w-lg-75"/>
+            </div>
+            <div className="mb-2" style={{ wordWrap: 'break-word' }}>
                 <strong>Nome: {data.name}</strong>
             </div>
-            <div className="mb-2">
+            <div className="mb-2" style={{ wordWrap: 'break-word' }}>
                 <strong>Preço: {data.price}</strong>
             </div>
-            <div className="mb-2">
+            <div className="mb-2" style={{ wordWrap: 'break-word' }}>
                 <strong>Descrição: {data.description}</strong>
             </div>
-            <div className="mb-2">
+            <div className="mb-2" style={{ wordWrap: 'break-word' }}>
                 {data.categoryId ? <strong>Categoria: {data.categoryId.name} </strong> : <strong> Sem categoria </strong>}
             </div>
-            <div className="mb-2">
+            <div className="mb-2" style={{ wordWrap: 'break-word' }}>
                 <strong>Data de criação: {data.createdAt}</strong>
             </div>
-            <div className="mb-2">
+            <div className="mb-2" style={{ wordWrap: 'break-word' }}>
                 <strong>Data de Atualização: {data.updatedAt}</strong>
             </div> 
-            <ButtonEdit id={id} link="/produtos/update" />
-            <button onClick={voltar} className="btn btn-sm btn-primary me-2">Voltar</button>
+            
+            <div className='row'>
+                    <div className="col-md-5 col-lg-3 col-sm-5 m-1">  <ButtonEdit id={id} link="/produtos/update" className="btn btn-success w-100"/></div>
+                    <div className="col-md-5 col-lg-3 col-sm-5 m-1">
+                        <button onClick={voltar} className="btn btn-primary w-100">Voltar</button>
+                    </div>
+                </div>
         </div>
     </div>) : <div></div>;
 }
+
