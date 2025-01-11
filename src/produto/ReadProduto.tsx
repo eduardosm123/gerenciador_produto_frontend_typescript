@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getProdutoById } from "../API/produto";
 import { setProductToReceive, clearProductToReceive } from "../redux/reducer/produtoSlice";
@@ -50,7 +50,7 @@ export default function ReadProduto() {
                 <strong>ID: {data._id}</strong>
             </div>
             <div className="mb-2" style={{ wordWrap: 'break-word' }}>
-                <img src={`${apiImage}/${data.image}`} alt="imagem do produto" className="img-fluid w-25 w-sm-25 w-md-50 w-lg-75"/>
+                <img src={`${apiImage}/${data.image}`} alt="imagem do produto" className="img-fluid w-25 w-sm-25 w-md-50 w-lg-75" />
             </div>
             <div className="mb-2" style={{ wordWrap: 'break-word' }}>
                 <strong>Nome: {data.name}</strong>
@@ -69,14 +69,14 @@ export default function ReadProduto() {
             </div>
             <div className="mb-2" style={{ wordWrap: 'break-word' }}>
                 <strong>Data de Atualização: {data.updatedAt}</strong>
-            </div> 
-            
+            </div>
+
             <div className='row'>
-                    <div className="col-md-5 col-lg-3 col-sm-5 m-1">  <ButtonEdit id={id} link="/produtos/update" className="btn btn-success w-100"/></div>
-                    <div className="col-md-5 col-lg-3 col-sm-5 m-1">
-                        <button onClick={voltar} className="btn btn-primary w-100">Voltar</button>
-                    </div>
+                <div className="col-md-5 col-lg-3 col-sm-5 m-1">  <ButtonEdit id={id} link="/produtos/update" className="btn btn-success w-100" /></div>
+                <div className="col-md-5 col-lg-3 col-sm-5 m-1">
+                    <button onClick={voltar} className="btn btn-primary w-100">Voltar</button>
                 </div>
+            </div>
         </div>
     </div>) : <div></div>;
 }

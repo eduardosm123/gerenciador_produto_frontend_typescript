@@ -1,11 +1,11 @@
 import React from "react"
 import { Link, useParams } from "react-router-dom";
- 
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
- 
+
 import { definirCategoriaFormUpdateAndReadName, definirCategoriaFormUpdateAndReadInicial, limparFormularioUpdateAndRead } from "../redux/reducer/categoriaSlice";
 import { getCategoriaById, updateCategory } from "../API/categoria";
 import { RootState } from "../redux/store";
@@ -55,13 +55,13 @@ export default function UpdateCategoria() {
 
     const handleUpdate = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-         
+
         async function updateCategoriaLocal() {
             try {
                 if (id) {
                     const currentDate = new Date();
                     const dateTime = currentDate.toISOString();
-                    await updateCategory(id, { name: data.name, __v: data.__v, _id: data._id, createdAt: data.createdAt, updatedAt: dateTime})
+                    await updateCategory(id, { name: data.name, __v: data.__v, _id: data._id, createdAt: data.createdAt, updatedAt: dateTime })
                 }
             } catch (error) {
                 console.log(error)
@@ -84,12 +84,11 @@ export default function UpdateCategoria() {
                             placeholder="Digite o nome da categoria"
                             onChange={e => dispatch(definirCategoriaFormUpdateAndReadName(e.target.value))}
                             value={data.name} />
-                    </div>  
+                    </div>
                     <div className='row'>
                         <div className="col-md-5 col-lg-3 col-sm-5 m-1"><ButtonAplicar msg="Editar" /></div>
                         <div className="col-md-5 col-lg-3 col-sm-5 m-1">
-                         
-                        <Link onClick={voltar} to={"/categoria"} className="btn btn-primary w-100 " >Voltar</Link>
+                            <Link onClick={voltar} to={"/categoria"} className="btn btn-primary w-100" >Voltar</Link>
                         </div>
                     </div>
                 </form>
